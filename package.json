@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@types/js-cookie": "^3.0.6",
+    "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
     "joi": "^18.0.2",
+    "js-cookie": "^3.0.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.68.0",

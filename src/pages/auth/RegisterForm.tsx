@@ -3,18 +3,44 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { RegisterSchema } from "../../schema/AuthSchema";
 import InputBox from "../../components/input/InputBox";
+import type { Register } from "../../types/Register";
+import { RegisterAccount } from "../../services/Auth";
+import { AxiosHandler } from "../../helper/AxiosHandler";
+import { failed, processing, success } from "../../helper/ToastHelper";
+import { navigator } from "../../helper/NavigationHelper";
 
-function Register() {
+function RegisterForm() {
   const {
     register,
     handleSubmit,
+    setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<{ username: string; email: string; password: string }>({
     resolver: joiResolver(RegisterSchema),
     mode: "onChange",
   });
 
-  const EmitSubmit = async () => {};
+  const EmitSubmit = async (credentials: Register) => {
+    processing("Registering...", "register");
+    try {
+      await RegisterAccount(credentials);
+      success("Successfully created new account", "register");
+      navigator.RedirectTo("/auth/login", true);
+    } catch (error: unknown) {
+      const { message, errors } = AxiosHandler(error);
+      if (errors) {
+        errors.map((error) => {
+          setError(error.field as "username" | "email" | "password", {
+            message: error.message,
+          });
+        });
+      }
+      failed(message, "register");
+    } finally {
+      reset();
+    }
+  };
 
   return (
     <div className="container">
@@ -58,4 +84,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterForm;

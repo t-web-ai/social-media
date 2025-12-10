@@ -2,11 +2,13 @@ import { Link } from "react-router";
 import "./DefaultHeader.css";
 import LinkItem from "../link/LinkItem";
 import { useRef } from "react";
+import { useAuthContext } from "../../context/AuthContext";
 
 interface Props {
   title: string;
 }
 function DefaultHeader({ title }: Props) {
+  const { user } = useAuthContext();
   const toggle = useRef<HTMLButtonElement>(null);
 
   return (
@@ -39,8 +41,21 @@ function DefaultHeader({ title }: Props) {
             <LinkItem to="/">Home</LinkItem>
             <LinkItem to="/about">About</LinkItem>
 
-            <LinkItem to="/auth/login">Login</LinkItem>
-            <LinkItem to="/auth/register">Register</LinkItem>
+            {!user && (
+              <>
+                <LinkItem to="/auth/login">Login</LinkItem>
+                <LinkItem to="/auth/register">Register</LinkItem>
+              </>
+            )}
+            {user && (
+              <>
+                <LinkItem to="/auth/logout">Logout</LinkItem>
+                <LinkItem to="/dashboard/posts">Posts</LinkItem>
+                <div className="px-2 border border-2 border-black rounded-lg text-center">
+                  <LinkItem to="/posts">{user.username}</LinkItem>
+                </div>
+              </>
+            )}
           </ul>
         </div>
       </div>
