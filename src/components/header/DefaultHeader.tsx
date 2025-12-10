@@ -52,7 +52,7 @@ function DefaultHeader({ title }: Props) {
                 <LinkItem to="/auth/logout">Logout</LinkItem>
                 <LinkItem to="/dashboard/posts">Posts</LinkItem>
                 <div className="px-2 border border-2 border-black rounded-lg text-center">
-                  <LinkItem to="/posts">{user.username}</LinkItem>
+                  <LinkItem to="/dashboard/posts">{user.username}</LinkItem>
                 </div>
               </>
             )}
