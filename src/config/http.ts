@@ -15,14 +15,10 @@ http.interceptors.response.use(
   (res) => res,
   async (err: AxiosError<{ status?: boolean; message?: string }>) => {
     const originalRequest = err.config as RequestConfigWithRetry;
-    console.log(err);
-    if (
-      !originalRequest._retry &&
-      err.response?.status === 401 &&
-      err.response.config.url == "/users/me" &&
-      (err.response.data.message == "Access token expired" ||
-        err.response.data.message == "No token is provided")
-    ) {
+    if (!originalRequest._retry && err.response?.status === 401) {
+      if (err.response.config.url == "/users/token/refresh") {
+        throw new Error("Logout");
+      }
       originalRequest._retry = true;
       try {
         // Refresh token API

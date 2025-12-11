@@ -25,8 +25,7 @@ export function AuthProvider({ children }: Props) {
       .then(({ data }: { data: ProfileData }) => {
         setUser(data);
       })
-      .catch((error: unknown) => {
-        console.log(error);
+      .catch(() => {
         setUser(null);
       })
       .finally(() => {
