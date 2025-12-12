@@ -53,14 +53,14 @@ function LoginForm() {
           label="Email"
           name="email"
           error={errors["email"]}
-          register={register}
+          register={register("email")}
           type="email"
         />
         <InputBox
           label="Password"
           name="password"
           error={errors["password"]}
-          register={register}
+          register={register("password")}
           type="text"
         />
         <button

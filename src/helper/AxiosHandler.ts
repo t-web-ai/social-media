@@ -3,7 +3,6 @@ import { GetErrorByStatus } from "../config/errors";
 import type { ErrorData } from "../types/ErrorData";
 
 export function AxiosHandler(error: unknown): ErrorData {
-  console.log(error);
   if (
     axios.isAxiosError<{
       status: number;

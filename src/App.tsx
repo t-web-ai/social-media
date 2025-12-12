@@ -10,6 +10,7 @@ import GuestRoute from "./components/router/GuestRoute";
 import ProtectedRoute from "./components/router/ProtectedRoute";
 import Posts from "./pages/dashboard/Posts";
 import Logout from "./pages/auth/Logout";
+import CreatePost from "./pages/dashboard/CreatePost";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           {/* protected route - start  */}
           <Route element={<ProtectedRoute />}>
             <Route path="dashboard/posts" element={<Posts />} />
+            <Route path="/dashboard/posts/create" element={<CreatePost />} />
             <Route path="auth/logout" element={<Logout />} />
           </Route>
           {/* protected route - end */}

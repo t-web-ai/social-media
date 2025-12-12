@@ -22,7 +22,9 @@ const PostAction = ({ post }: Props) => {
       </div>
       <div
         onClick={() => {
-          navigator.clipboard.writeText(`${location.origin}/posts/${post.id}`);
+          navigator.clipboard.writeText(
+            `${location.origin}/dashboard/posts/${post.id}`
+          );
         }}
       >
         <i className="bi bi-share-fill"></i>

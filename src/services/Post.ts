@@ -16,3 +16,11 @@ export async function GetAllPosts({
     },
   });
 }
+
+export async function CreateNewPost(PostForm: FormData) {
+  return await http.post("/posts", PostForm, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}

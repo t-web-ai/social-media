@@ -49,21 +49,21 @@ function RegisterForm() {
           label="Username"
           name="username"
           error={errors["username"]}
-          register={register}
+          register={register("username")}
           type="text"
         />
         <InputBox
           label="Email"
           name="email"
           error={errors["email"]}
-          register={register}
+          register={register("email")}
           type="email"
         />
         <InputBox
           label="Password"
           name="password"
           error={errors["password"]}
-          register={register}
+          register={register("password")}
           type="text"
         />
         <button
