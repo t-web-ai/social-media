@@ -38,11 +38,10 @@ function DefaultHeader({ title }: Props) {
               }
             }}
           >
-            <LinkItem to="/">Home</LinkItem>
-            <LinkItem to="/about">About</LinkItem>
-
             {!user && (
               <>
+                <LinkItem to="/">Home</LinkItem>
+                <LinkItem to="/about">About</LinkItem>
                 <LinkItem to="/auth/login">Login</LinkItem>
                 <LinkItem to="/auth/register">Register</LinkItem>
               </>

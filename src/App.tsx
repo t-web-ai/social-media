@@ -17,11 +17,10 @@ const App = () => {
     <MainRouter>
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-
           {/* guest route - start */}
           <Route element={<GuestRoute />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
             <Route path="auth/login" element={<LoginForm />} />
             <Route path="auth/register" element={<RegisterForm />} />
           </Route>
