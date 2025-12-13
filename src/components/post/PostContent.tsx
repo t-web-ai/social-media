@@ -7,7 +7,7 @@ const PostContent = ({ post }: Props) => {
   return (
     <>
       <div
-        className={`px-3 py-1 text-base`}
+        className={`px-3 py-1 text-base fw-semibold`}
         style={{
           whiteSpace: "pre-line",
           wordBreak: "break-all",

@@ -11,7 +11,7 @@ const PostHeader = ({ post }: Props) => {
   const { user } = useAuthContext();
   const [isOpen, setOpen] = useState(false);
   return (
-    <div className="fw-semibold d-flex justify-content-between p-3 bg-secondary-subtle ">
+    <div className="fw-bold d-flex justify-content-between p-3 bg-secondary-subtle">
       <DeleteModal id={post.id} isOpen={isOpen} setOpen={setOpen} />
       {/* post info - start */}
       <div>
