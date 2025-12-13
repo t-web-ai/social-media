@@ -24,3 +24,7 @@ export async function CreateNewPost(PostForm: FormData) {
     },
   });
 }
+
+export async function DeletePostById(id: string) {
+  return await http.delete(`/posts/${id}`);
+}
