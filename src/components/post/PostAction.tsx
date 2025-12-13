@@ -1,13 +1,19 @@
+import { usePostContext } from "../../context/PostContext";
 import type { PostResponse } from "../../types/PostResponse";
 
 interface Props {
   post: PostResponse;
 }
 const PostAction = ({ post }: Props) => {
+  const { LikePost } = usePostContext();
   return (
     <div className="d-flex justify-content-between align-items-center fs-5 px-3 py-2 border-top border-2">
       <div className="d-flex gap-2 align-items-center">
-        <div>
+        <div
+          onClick={() => {
+            LikePost(post.id, post.userHasLiked);
+          }}
+        >
           {post.userHasLiked ? (
             <i className="bi bi-heart-fill"></i>
           ) : (

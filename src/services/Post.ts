@@ -28,3 +28,11 @@ export async function CreateNewPost(PostForm: FormData) {
 export async function DeletePostById(id: string) {
   return await http.delete(`/posts/${id}`);
 }
+
+export async function LikePostById(id: string) {
+  return await http.post(`/posts/${id}/like`);
+}
+
+export async function UnlikePostById(id: string) {
+  return await http.delete(`/posts/${id}/like`);
+}

@@ -1,5 +1,5 @@
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import { useDeleteContext } from "../../../context/DeleteContext";
+import { usePostContext } from "../../../context/PostContext";
 
 interface Props {
   id: string;
@@ -7,7 +7,7 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 const DeleteModal = ({ id, isOpen, setOpen }: Props) => {
-  const { DeletePost } = useDeleteContext();
+  const { DeletePost } = usePostContext();
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";

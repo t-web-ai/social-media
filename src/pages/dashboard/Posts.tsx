@@ -2,21 +2,27 @@ import { Link } from "react-router";
 import PostComponent from "../../components/post/PostComponent";
 import LoadingSkeleton from "../../components/skeleton/LoadingSkeleton";
 import { PostQuery } from "../../query/PostQuery";
-import { DeleteContextProvider } from "../../context/DeleteContext";
+import { PostContextProvider } from "../../context/PostContext";
 import PostDeleteQuery from "../../query/PostDeleteQuery";
+import { PostLikeQuery } from "../../query/PostLikeQuery";
 
 const Posts = () => {
   const { data: posts, isFetching } = PostQuery();
 
   const PostDeleteMutate = PostDeleteQuery();
+  const PostLikeMutate = PostLikeQuery();
 
   const DeletePost = (id: string) => {
     PostDeleteMutate.mutate(id);
   };
 
+  const LikePost = (id: string, hasLiked: boolean) => {
+    PostLikeMutate.mutate({ id, hasLiked });
+  };
+
   if (isFetching) return <LoadingSkeleton />;
   return (
-    <DeleteContextProvider value={{ DeletePost }}>
+    <PostContextProvider value={{ DeletePost, LikePost }}>
       <div className="container" style={{ maxWidth: "600px" }}>
         <div className="p-2">
           <Link
@@ -34,7 +40,7 @@ const Posts = () => {
           posts?.data &&
           posts.data.map((post) => <PostComponent post={post} key={post.id} />)}
       </div>
-    </DeleteContextProvider>
+    </PostContextProvider>
   );
 };
 

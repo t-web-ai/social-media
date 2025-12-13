@@ -7,8 +7,16 @@ export interface PostResponse {
     id: string;
     username: string;
   };
-  likes: [];
-  comments: [];
+  likes: { id: string; username: string }[];
+  comments: {
+    userId: string;
+    user: {
+      username: string;
+      email: string;
+    };
+    comment: string;
+    createdAt: string;
+  }[];
   likeCount: number;
   userHasLiked: boolean;
 }

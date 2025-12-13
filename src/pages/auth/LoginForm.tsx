@@ -9,6 +9,7 @@ import { AxiosHandler } from "../../helper/AxiosHandler";
 import type { ErrorData } from "../../types/ErrorData";
 import { failed, processing, success } from "../../helper/ToastHelper";
 import { useAuthContext } from "../../context/AuthContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 function LoginForm() {
   const { setRefresh } = useAuthContext();
@@ -23,11 +24,13 @@ function LoginForm() {
     mode: "onChange",
   });
 
+  const client = useQueryClient();
   const EmitSubmit = async (credentials: Login) => {
     processing("Logging in...", "login");
     try {
       await LoginAccount(credentials);
       success("Successfully logged in", "login");
+      client.refetchQueries({ queryKey: ["posts"] });
       if (setRefresh) {
         setRefresh((refresh) => !refresh);
       }
