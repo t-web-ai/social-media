@@ -17,7 +17,7 @@ const PostContent = ({ post }: Props) => {
         {post.content}
       </div>
       {post.imageUrl && (
-        <div className="p-2 border-top border-2">
+        <div className="p-2 border-top border-1">
           <img src={post.imageUrl} className="w-100 rounded" />
         </div>
       )}

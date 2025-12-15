@@ -1,3 +1,5 @@
+import type { Comment } from "./Comment";
+
 export interface PostResponse {
   id: string;
   content: string;
@@ -8,15 +10,7 @@ export interface PostResponse {
     username: string;
   };
   likes: { id: string; username: string }[];
-  comments: {
-    userId: string;
-    user: {
-      username: string;
-      email: string;
-    };
-    comment: string;
-    createdAt: string;
-  }[];
+  comments: Comment[];
   likeCount: number;
   userHasLiked: boolean;
 }

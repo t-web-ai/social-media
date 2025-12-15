@@ -4,6 +4,7 @@ import { AxiosHandler } from "../helper/AxiosHandler";
 import { failed, processing, success } from "../helper/ToastHelper";
 import type { PostResponse } from "../types/PostResponse";
 import type { DeleteResponse } from "../types/DeleteResponse";
+import { navigator } from "../helper/NavigationHelper";
 
 const PostDeleteQuery = () => {
   const client = useQueryClient();
@@ -18,6 +19,7 @@ const PostDeleteQuery = () => {
       client.setQueryData(
         ["posts"],
         function (posts: { data: PostResponse[] }) {
+          if (!posts) return posts;
           return {
             ...posts,
             data: posts.data.filter((post) => {
@@ -26,6 +28,8 @@ const PostDeleteQuery = () => {
           };
         }
       );
+      client.setQueryData(["posts", response.postId], null);
+      navigator.RedirectTo("/dashboard/posts/", false);
     },
     onError: function (error: unknown) {
       const { message } = AxiosHandler(error);

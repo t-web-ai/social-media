@@ -1,7 +1,7 @@
 import type { PostResponse } from "../../types/PostResponse";
 import { useAuthContext } from "../../context/AuthContext";
 import { format } from "date-fns";
-import DeleteModal from "../ui/modal/DeleteModal";
+import DeletePostModal from "../ui/modal/DeletePostModal";
 import { useState } from "react";
 
 interface Props {
@@ -12,7 +12,7 @@ const PostHeader = ({ post }: Props) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <div className="fw-bold d-flex justify-content-between p-3 bg-secondary-subtle">
-      <DeleteModal id={post.id} isOpen={isOpen} setOpen={setOpen} />
+      <DeletePostModal id={post.id} isOpen={isOpen} setOpen={setOpen} />
       {/* post info - start */}
       <div>
         <div>{post.author.id == user?.id ? "You" : post.author.username}</div>

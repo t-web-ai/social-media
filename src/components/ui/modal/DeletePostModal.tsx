@@ -6,7 +6,7 @@ interface Props {
   isOpen: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
-const DeleteModal = ({ id, isOpen, setOpen }: Props) => {
+const DeletePostModal = ({ id, isOpen, setOpen }: Props) => {
   const { DeletePost } = usePostContext();
   useEffect(() => {
     if (isOpen) {
@@ -37,7 +37,7 @@ const DeleteModal = ({ id, isOpen, setOpen }: Props) => {
           <div>
             <div>
               <div className="fs-3">Are you sure?</div>
-              <span>This action can't be undone.</span>
+              <span className="fw-semibold">This action can't be undone.</span>
             </div>
             <div className="mt-3 d-flex justify-content-between gap-2 align-items-center">
               <button
@@ -63,4 +63,4 @@ const DeleteModal = ({ id, isOpen, setOpen }: Props) => {
   );
 };
 
-export default DeleteModal;
+export default DeletePostModal;

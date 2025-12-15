@@ -8,7 +8,7 @@ interface Props {
 }
 const PostComponent = ({ post }: Props) => {
   return (
-    <div className="border border-2 m-2 rounded">
+    <div className="border border-1 m-2 rounded">
       <PostHeader post={post} />
       <PostContent post={post} />
       <PostAction post={post} />

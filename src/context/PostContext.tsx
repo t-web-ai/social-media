@@ -3,6 +3,7 @@ import type { PostContextType } from "../types/PostContextType";
 
 const PostContext = createContext<PostContextType>({
   DeletePost: () => {},
+  DeleteComment: () => {},
   LikePost: () => {},
 });
 PostContext.displayName = "Post Context";

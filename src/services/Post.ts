@@ -36,3 +36,7 @@ export async function LikePostById(id: string) {
 export async function UnlikePostById(id: string) {
   return await http.delete(`/posts/${id}/like`);
 }
+
+export async function GetPostById(id: string) {
+  return await http.get(`/posts/${id}`);
+}

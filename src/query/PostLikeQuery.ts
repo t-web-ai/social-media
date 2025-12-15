@@ -22,6 +22,29 @@ export const PostLikeQuery = function () {
       await client.cancelQueries({ queryKey: ["posts"] });
       const old = client.getQueryData<{ data: PostResponse[] }>(["posts"]);
 
+      await client.setQueryData(["posts", id], function (post: PostResponse) {
+        if (!post) return post;
+        if (post.id == id) {
+          if (hasLiked) {
+            return {
+              ...post,
+              userHasLiked: false,
+              likeCount: post.likeCount - 1,
+              likes: post.likes.filter((like) => like.id !== user!.id),
+            };
+          } else {
+            return {
+              ...post,
+              userHasLiked: true,
+              likeCount: post.likeCount + 1,
+              likes: [
+                ...post.likes,
+                { id: user!.id, username: user?.username! },
+              ],
+            };
+          }
+        }
+      });
       await client.setQueryData(
         ["posts"],
         function (posts: { data: PostResponse[] }) {
