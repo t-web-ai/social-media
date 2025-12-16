@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import MainRouter from "./components/router/MainRouter";
 import DefaultLayout from "./layouts/DefaultLayout";
 import Home from "./pages/guest/Home";
-import NotFound from "./pages/other_pages/NotFound";
+import NotFound from "./pages/other/NotFound";
 import About from "./pages/guest/About";
 import LoginForm from "./pages/auth/LoginForm";
 import RegisterForm from "./pages/auth/RegisterForm";

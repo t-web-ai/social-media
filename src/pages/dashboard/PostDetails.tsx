@@ -11,6 +11,7 @@ import { CommentSchema } from "../../schema/CommentSchema";
 import { CommentCreateQuery } from "../../query/CommentCreateQuery";
 import type { CommentCreateType } from "../../types/CommentCreateType";
 import { useEffect } from "react";
+import { CommentDeleteQuery } from "../../query/CommentDeleteQuery";
 
 const PostDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -35,13 +36,14 @@ const PostDetails = () => {
   const PostDeleteMutate = PostDeleteQuery();
   const PostLikeMutate = PostLikeQuery();
   const CommentCreateMutate = CommentCreateQuery();
+  const CommentDeleteMutate = CommentDeleteQuery();
 
   const DeletePost = (id: string) => {
     PostDeleteMutate.mutate(id);
   };
 
   const DeleteComment = (id: string) => {
-    console.log(id);
+    CommentDeleteMutate.mutate({ postId: post!.id, commentId: id });
   };
 
   const CommentOnPost = async ({ postId, comment }: CommentCreateType) => {

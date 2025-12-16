@@ -5,3 +5,7 @@ export async function AddComment(postId: string, comment: string) {
     comment,
   });
 }
+
+export async function DeleteComment(commentId: string) {
+  return await http.delete(`/comments/${commentId}`);
+}
