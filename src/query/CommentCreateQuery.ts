@@ -30,46 +30,42 @@ export const CommentCreateQuery = function () {
       _,
       context
     ) {
-      try {
-        const NewComment: Comment = {
-          id: comment.id,
-          userId: comment.userId,
-          user: {
-            username: user!.username,
-            email: user!.email,
-          },
-          comment: comment.comment,
-          createdAt: comment.createdAt,
-        };
-        context.client.setQueryData(
-          ["posts", postId],
-          function (post: PostResponse): PostResponse {
-            if (!post) return post;
-            return {
-              ...post,
-              comments: [NewComment, ...post.comments],
-            };
-          }
-        );
-        context.client.setQueryData(
-          ["posts"],
-          function (posts: { data: PostResponse[] }) {
-            if (!posts) return posts;
-            return {
-              ...posts,
-              data: posts.data.map((post) => {
-                if (post.id != postId) return post;
-                return {
-                  ...post,
-                  comments: [NewComment, ...post.comments],
-                };
-              }),
-            };
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      const NewComment: Comment = {
+        id: comment.id,
+        userId: comment.userId,
+        user: {
+          username: user!.username,
+          email: user!.email,
+        },
+        comment: comment.comment,
+        createdAt: comment.createdAt,
+      };
+      context.client.setQueryData(
+        ["posts", postId],
+        function (post: PostResponse): PostResponse {
+          if (!post) return post;
+          return {
+            ...post,
+            comments: [NewComment, ...post.comments],
+          };
+        }
+      );
+      context.client.setQueryData(
+        ["posts"],
+        function (posts: { data: PostResponse[] }) {
+          if (!posts) return posts;
+          return {
+            ...posts,
+            data: posts.data.map((post) => {
+              if (post.id != postId) return post;
+              return {
+                ...post,
+                comments: [NewComment, ...post.comments],
+              };
+            }),
+          };
+        }
+      );
     },
     onError: function (error: unknown) {
       const { message } = AxiosHandler(error);
