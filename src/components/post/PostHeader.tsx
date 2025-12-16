@@ -23,11 +23,11 @@ const PostHeader = ({ post }: Props) => {
         style={{ backgroundColor: "#f3f3f3ff" }}
       >
         <div>
-          <div className="fw-semibold fs-6">
+          <div className="fw-semibold">
             {isOwner ? "You" : post.author.username}
           </div>
-          <div className="text-muted small">
-            {format(new Date(post.createdAt), "MMM d · h:mm a")}
+          <div className="text-muted fw-semibold">
+            {format(new Date(post.createdAt), "MMM d, Y · h:mm a")}
           </div>
         </div>
 

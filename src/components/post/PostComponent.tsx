@@ -10,7 +10,7 @@ interface Props {
 const PostComponent = ({ post }: Props) => {
   return (
     <div
-      className="card my-4 border-1 mx-2 overflow-hidden"
+      className="card my-2 border-1 mx-2 overflow-hidden"
       style={{
         borderRadius: 14,
       }}

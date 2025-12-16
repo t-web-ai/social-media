@@ -13,9 +13,17 @@ const CommentHeader = ({ comment, authorId }: Props) => {
   const { user } = useAuthContext();
   return (
     <div className="d-flex justify-content-between">
-      <div className="fw-semibold">
-        <div>{comment.userId == user!.id ? "You" : comment.user.username}</div>
-        <div>{format(new Date(comment.createdAt), "MM/dd/yyyy h:m:sa")}</div>
+      <div className="fw-semibold text-muted">
+        <div>
+          {comment.userId == user!.id ? (
+            "You"
+          ) : (
+            <div>
+              <div>{comment.user.email}</div>
+            </div>
+          )}
+        </div>
+        <div>{format(new Date(comment.createdAt), "MMM d, Y · h:mm a")}</div>
       </div>
       {(comment.userId == user!.id || authorId == user!.id) && (
         <div>
