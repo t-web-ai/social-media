@@ -40,6 +40,7 @@ const PostDetailsWithComments = ({
                 key={`${comment.userId}${comment.createdAt}`}
                 comment={comment}
                 authorId={post.author.id}
+                postId={post.id}
               />
             );
           })}

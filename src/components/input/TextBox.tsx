@@ -9,7 +9,7 @@ interface Props {
 }
 const TextBox = ({ name, label, error, register, placeholder }: Props) => {
   return (
-    <div className="mb-3">
+    <div className="mb-2">
       {label && (
         <label htmlFor={name} className="form-label fs-5">
           {label}
@@ -17,7 +17,7 @@ const TextBox = ({ name, label, error, register, placeholder }: Props) => {
       )}
       <textarea
         id={name}
-        className="form-control fs-5"
+        className="form-control fw-semibold"
         rows={4}
         style={{ resize: "none" }}
         {...register}

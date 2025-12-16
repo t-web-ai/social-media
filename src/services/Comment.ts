@@ -9,3 +9,9 @@ export async function AddComment(postId: string, comment: string) {
 export async function DeleteComment(commentId: string) {
   return await http.delete(`/comments/${commentId}`);
 }
+
+export async function UpdateComment(commentId: string, comment: string) {
+  return await http.patch(`/comments/${commentId}`, {
+    comment,
+  });
+}
