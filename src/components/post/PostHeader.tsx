@@ -7,28 +7,46 @@ import { useState } from "react";
 interface Props {
   post: PostResponse;
 }
+
 const PostHeader = ({ post }: Props) => {
   const { user } = useAuthContext();
   const [isOpen, setOpen] = useState(false);
-  return (
-    <div className="fw-bold d-flex justify-content-between p-3 bg-secondary-subtle">
-      <DeletePostModal id={post.id} isOpen={isOpen} setOpen={setOpen} />
-      {/* post info - start */}
-      <div>
-        <div>{post.author.id == user?.id ? "You" : post.author.username}</div>
-        <div>{format(new Date(post.createdAt), "MM/dd/yyyy h:m:sa")}</div>
-      </div>
-      {/* post info - end */}
 
-      {/* delete post - start  */}
-      {post.author.id == user?.id && (
-        <i
-          className="bi bi-trash fs-5 text-danger"
-          onClick={() => setOpen(true)}
-        ></i>
-      )}
-      {/* delete post - end  */}
-    </div>
+  const isOwner = post.author.id === user?.id;
+
+  return (
+    <>
+      <DeletePostModal id={post.id} isOpen={isOpen} setOpen={setOpen} />
+
+      <div
+        className="d-flex justify-content-between align-items-center px-4 py-3"
+        style={{ backgroundColor: "#f3f3f3ff" }}
+      >
+        <div>
+          <div className="fw-semibold fs-6">
+            {isOwner ? "You" : post.author.username}
+          </div>
+          <div className="text-muted small">
+            {format(new Date(post.createdAt), "MMM d · h:mm a")}
+          </div>
+        </div>
+
+        {isOwner && (
+          <div
+            className="rounded-circle d-flex align-items-center justify-content-center"
+            style={{
+              width: 36,
+              height: 36,
+              cursor: "pointer",
+              background: "rgba(220,53,69,0.1)",
+            }}
+            onClick={() => setOpen(true)}
+          >
+            <i className="bi bi-trash text-danger" />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

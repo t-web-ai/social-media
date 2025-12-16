@@ -6,9 +6,15 @@ import PostHeader from "./PostHeader";
 interface Props {
   post: PostResponse;
 }
+
 const PostComponent = ({ post }: Props) => {
   return (
-    <div className="border border-1 m-2 rounded">
+    <div
+      className="card my-4 border-1 mx-2 overflow-hidden"
+      style={{
+        borderRadius: 14,
+      }}
+    >
       <PostHeader post={post} />
       <PostContent post={post} />
       <PostAction post={post} />
