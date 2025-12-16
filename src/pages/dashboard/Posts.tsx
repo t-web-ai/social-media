@@ -19,6 +19,7 @@ const Posts = () => {
   const LikePost = (id: string, hasLiked: boolean) => {
     PostLikeMutate.mutate({ id, hasLiked });
   };
+  console.log(posts);
 
   if (isFetching) return <LoadingSkeleton />;
   return (
