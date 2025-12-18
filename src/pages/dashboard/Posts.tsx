@@ -1,10 +1,10 @@
 import { Link } from "react-router";
 import PostComponent from "../../components/post/PostComponent";
-import LoadingSkeleton from "../../components/skeleton/LoadingSkeleton";
 import { PostQuery } from "../../query/PostQuery";
 import { PostContextProvider } from "../../context/PostContext";
 import PostDeleteQuery from "../../query/PostDeleteQuery";
 import { PostLikeQuery } from "../../query/PostLikeQuery";
+import PostsLoadingSkeleton from "../../components/skeleton/PostsLoadingSkeleton";
 
 const Posts = () => {
   const {
@@ -25,7 +25,12 @@ const Posts = () => {
   const LikePost = (id: string, hasLiked: boolean) => {
     PostLikeMutate.mutate({ id, hasLiked });
   };
-  if (isPending) return <LoadingSkeleton />;
+  if (isPending)
+    return (
+      <div className="container" style={{ maxWidth: "600px" }}>
+        <PostsLoadingSkeleton />
+      </div>
+    );
   return (
     <PostContextProvider value={{ DeletePost, LikePost }}>
       <div className="container" style={{ maxWidth: "600px" }}>

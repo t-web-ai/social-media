@@ -1,7 +1,13 @@
 const LoadingSkeleton = () => {
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center vw-100 fs-3 fw-semibold">
-      Loading...
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div
+        className="spinner-border text-black"
+        role="status"
+        style={{ width: "2rem", height: "2rem" }}
+      >
+        <span className="visually-hidden">Loading...</span>
+      </div>
     </div>
   );
 };

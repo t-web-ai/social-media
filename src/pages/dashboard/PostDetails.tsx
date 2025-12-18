@@ -1,6 +1,5 @@
 import { useParams } from "react-router";
 import { PostDetailsQuery } from "../../query/PostDetailsQuery";
-import LoadingSkeleton from "../../components/skeleton/LoadingSkeleton";
 import PostDetailsWithComments from "../../components/comment/PostDetailsWithComments";
 import PostDeleteQuery from "../../query/PostDeleteQuery";
 import { PostLikeQuery } from "../../query/PostLikeQuery";
@@ -12,6 +11,8 @@ import { CommentCreateQuery } from "../../query/CommentCreateQuery";
 import type { CommentCreateType } from "../../types/CommentCreateType";
 import { useEffect } from "react";
 import { CommentDeleteQuery } from "../../query/CommentDeleteQuery";
+import NotFound from "../other/NotFound";
+import PostDetailsLoadingSkeleton from "../../components/skeleton/PostDetailsLoadingSkeleton";
 
 const PostDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -55,11 +56,13 @@ const PostDetails = () => {
     PostLikeMutate.mutate({ id, hasLiked });
   };
 
-  if (isFetching) return <LoadingSkeleton />;
-  if (!post)
+  if (isFetching)
     return (
-      <div className="fs-5 fw-semibold text-center mt-5">Post is not found</div>
+      <div className="container mt-2 p-2" style={{ maxWidth: "600px" }}>
+        <PostDetailsLoadingSkeleton />
+      </div>
     );
+  if (!post) return <NotFound />;
 
   return (
     <PostContextProvider value={{ DeletePost, DeleteComment, LikePost }}>

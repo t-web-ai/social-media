@@ -1,7 +1,7 @@
 const NotFound = () => {
   return (
-    <div className="vh-100 vw-100 d-flex justify-content-center align-items-center fs-3">
-      Page is not found!
+    <div className="mt-5 fw-bold vw-100 d-flex justify-content-center align-items-center fs-5">
+      404 Not Found!
     </div>
   );
 };
