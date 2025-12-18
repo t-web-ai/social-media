@@ -17,3 +17,7 @@ export async function GetProfile() {
 export async function GetRefreshToken() {
   return await http.get("/users/token/refresh");
 }
+
+export async function LogoutAccount() {
+  return await http.post("/auth/logout");
+}
