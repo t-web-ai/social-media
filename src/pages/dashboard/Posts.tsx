@@ -7,7 +7,13 @@ import PostDeleteQuery from "../../query/PostDeleteQuery";
 import { PostLikeQuery } from "../../query/PostLikeQuery";
 
 const Posts = () => {
-  const { data: posts, isFetching } = PostQuery();
+  const {
+    data: posts,
+    isPending,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = PostQuery();
 
   const PostDeleteMutate = PostDeleteQuery();
   const PostLikeMutate = PostLikeQuery();
@@ -19,8 +25,7 @@ const Posts = () => {
   const LikePost = (id: string, hasLiked: boolean) => {
     PostLikeMutate.mutate({ id, hasLiked });
   };
-
-  if (isFetching) return <LoadingSkeleton />;
+  if (isPending) return <LoadingSkeleton />;
   return (
     <PostContextProvider value={{ DeletePost, LikePost }}>
       <div className="container" style={{ maxWidth: "600px" }}>
@@ -37,8 +42,32 @@ const Posts = () => {
           </Link>
         </div>
         {posts &&
-          posts?.data &&
-          posts.data.map((post) => <PostComponent post={post} key={post.id} />)}
+          posts.pages &&
+          posts.pages
+            .flat()
+            .map((post) => <PostComponent post={post} key={post.id} />)}
+        <div className="d-flex justify-content-center my-3">
+          {isFetching ? (
+            <div className="text-center py-3 fw-semibold text-muted">
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            </div>
+          ) : (
+            hasNextPage && (
+              <div className="text-center py-3">
+                <button
+                  className="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm"
+                  onClick={() => fetchNextPage()}
+                >
+                  See More
+                </button>
+              </div>
+            )
+          )}
+        </div>
       </div>
     </PostContextProvider>
   );

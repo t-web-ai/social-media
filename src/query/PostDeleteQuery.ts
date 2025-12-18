@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  type InfiniteData,
+} from "@tanstack/react-query";
 import { DeletePostById } from "../services/Post";
 import { AxiosHandler } from "../helper/AxiosHandler";
 import { failed, processing, success } from "../helper/ToastHelper";
@@ -16,14 +20,16 @@ const PostDeleteQuery = () => {
     },
     onSuccess: function (response: DeleteResponse) {
       success(response.message, "delete-post");
-      client.setQueryData(
+      client.setQueryData<InfiniteData<PostResponse[]>>(
         ["posts"],
-        function (posts: { data: PostResponse[] }) {
+        function (posts): InfiniteData<PostResponse[]> | undefined {
           if (!posts) return posts;
           return {
             ...posts,
-            data: posts.data.filter((post) => {
-              return post.id != response.postId;
+            pages: posts.pages.map((page) => {
+              return page.filter((post) => {
+                return post.id != response.postId;
+              });
             }),
           };
         }

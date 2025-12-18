@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  type InfiniteData,
+} from "@tanstack/react-query";
 import type { PostResponse } from "../types/PostResponse";
 import { GetPostById } from "../services/Post";
 
@@ -11,8 +15,9 @@ export const PostDetailsQuery = function (id: string) {
     },
     initialData: () => {
       return client
-        .getQueryData<{ data: PostResponse[] }>(["posts"])
-        ?.data.find((post) => post.id === id);
+        .getQueryData<InfiniteData<PostResponse[]>>(["posts"])
+        ?.pages.flat()
+        .find((post) => post.id === id);
     },
     refetchOnMount: false,
     retry: 0,

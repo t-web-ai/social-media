@@ -64,20 +64,19 @@ const CreatePost = () => {
           error={errors["content"]}
         />
 
-        <button
-          type="submit"
-          className="btn btn-primary fs-5"
-          disabled={isSubmitting}
-        >
-          Post
-        </button>
+        <div className="d-flex gap-2">
+          <button
+            type="submit"
+            className="btn btn-primary fw-semibold px-4"
+            disabled={isSubmitting}
+          >
+            Post
+          </button>
+          <Link to="/dashboard/posts" className="btn fw-semibold">
+            Cancel
+          </Link>
+        </div>
       </form>
-      <Link
-        to="/auth/register"
-        className="text-decoration-none text-center d-block fs-5"
-      >
-        I don't have an account
-      </Link>
     </div>
   );
 };

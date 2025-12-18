@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  type InfiniteData,
+} from "@tanstack/react-query";
 import { LikePostById, UnlikePostById } from "../services/Post";
 import type { PostResponse } from "../types/PostResponse";
 import { useAuthContext } from "../context/AuthContext";
@@ -45,34 +49,36 @@ export const PostLikeQuery = function () {
           }
         }
       });
-      await client.setQueryData(
+      client.setQueryData<InfiniteData<PostResponse[]>>(
         ["posts"],
-        function (posts: { data: PostResponse[] }) {
+        function (posts): InfiniteData<PostResponse[]> | undefined {
           if (!posts) return posts;
           return {
             ...posts,
-            data: posts.data.map((post) => {
-              if (post.id == id) {
-                if (hasLiked) {
-                  return {
-                    ...post,
-                    userHasLiked: false,
-                    likeCount: post.likeCount - 1,
-                    likes: post.likes.filter((like) => like.id !== user!.id),
-                  };
-                } else {
-                  return {
-                    ...post,
-                    userHasLiked: true,
-                    likeCount: post.likeCount + 1,
-                    likes: [
-                      ...post.likes,
-                      { id: user!.id, username: user?.username! },
-                    ],
-                  };
+            pages: posts.pages.map((page) => {
+              return page.map((post) => {
+                if (post.id == id) {
+                  if (hasLiked) {
+                    return {
+                      ...post,
+                      userHasLiked: false,
+                      likeCount: post.likeCount - 1,
+                      likes: post.likes.filter((like) => like.id !== user!.id),
+                    };
+                  } else {
+                    return {
+                      ...post,
+                      userHasLiked: true,
+                      likeCount: post.likeCount + 1,
+                      likes: [
+                        ...post.likes,
+                        { id: user!.id, username: user?.username! },
+                      ],
+                    };
+                  }
                 }
-              }
-              return post;
+                return post;
+              });
             }),
           };
         }

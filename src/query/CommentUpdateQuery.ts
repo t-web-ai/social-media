@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, type InfiniteData } from "@tanstack/react-query";
 import { UpdateComment } from "../services/Comment";
 import { AxiosHandler } from "../helper/AxiosHandler";
 import { failed, processing, success } from "../helper/ToastHelper";
@@ -44,25 +44,27 @@ export const CommentUpdateQuery = function () {
         }
       );
 
-      context.client.setQueryData(
+      context.client.setQueryData<InfiniteData<PostResponse[]>>(
         ["posts"],
-        function (posts: { data: PostResponse[] }) {
+        function (posts): InfiniteData<PostResponse[]> | undefined {
           if (!posts) return posts;
           return {
             ...posts,
-            data: posts.data.map(function (post): PostResponse {
-              if (post.id == postId) {
-                return {
-                  ...post,
-                  comments: post.comments.map(function (comment): Comment {
-                    return {
-                      ...comment,
-                      comment: cmt,
-                    };
-                  }),
-                };
-              }
-              return post;
+            pages: posts.pages.map((page) => {
+              return page.map(function (post): PostResponse {
+                if (post.id == postId) {
+                  return {
+                    ...post,
+                    comments: post.comments.map(function (comment): Comment {
+                      return {
+                        ...comment,
+                        comment: cmt,
+                      };
+                    }),
+                  };
+                }
+                return post;
+              });
             }),
           };
         }

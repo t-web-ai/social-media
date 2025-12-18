@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  type InfiniteData,
+} from "@tanstack/react-query";
 import { AxiosHandler } from "../helper/AxiosHandler";
 import { navigator } from "../helper/NavigationHelper";
 import { failed, processing, success } from "../helper/ToastHelper";
@@ -14,7 +18,6 @@ interface Params {
 }
 export const PostCreateQuery = function () {
   const client = useQueryClient();
-  const PostCache = client.getQueryData(["posts"]);
   const { user } = useAuthContext();
   return useMutation({
     mutationKey: ["posts"],
@@ -23,9 +26,10 @@ export const PostCreateQuery = function () {
       return (await CreateNewPost(PostForm)).data;
     },
     onSuccess: function (data: NewPostResponse) {
-      client.setQueryData(
+      client.setQueryData<InfiniteData<PostResponse[]>>(
         ["posts"],
-        function (posts: { data: PostResponse[] }) {
+        function (posts): InfiniteData<PostResponse[]> | undefined {
+          if (!posts) return posts;
           const NewPost = {
             id: data.id,
             content: data.content,
@@ -40,12 +44,12 @@ export const PostCreateQuery = function () {
             likeCount: 0,
             userHasLiked: false,
           };
-          if (PostCache) {
-            return {
-              ...posts,
-              data: [NewPost, ...posts.data],
-            };
-          }
+
+          return {
+            ...posts,
+            pages: [[NewPost, ...posts.pages[0]], ...posts.pages.slice(1)],
+            pageParams: posts.pageParams,
+          };
         }
       );
       success("Successfully created a new post", "create-post");

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, type InfiniteData } from "@tanstack/react-query";
 
 import { DeleteComment } from "../services/Comment";
 import type { CommentDeletType } from "../types/CommentDeleteType";
@@ -31,20 +31,22 @@ export const CommentDeleteQuery = function () {
           };
         }
       );
-      context.client.setQueryData(
+      context.client.setQueryData<InfiniteData<PostResponse[]>>(
         ["posts"],
-        function (posts: { data: PostResponse[] }) {
+        function (posts): InfiniteData<PostResponse[]> | undefined {
           if (!posts) return posts;
           return {
             ...posts,
-            data: posts.data.map((post) => {
-              if (post.id != postId) return post;
-              return {
-                ...post,
-                comments: post.comments.filter((comment) => {
-                  return comment.id != commentId;
-                }),
-              };
+            pages: posts.pages.map((page) => {
+              return page.map((post) => {
+                if (post.id != postId) return post;
+                return {
+                  ...post,
+                  comments: post.comments.filter((comment) => {
+                    return comment.id != commentId;
+                  }),
+                };
+              });
             }),
           };
         }
